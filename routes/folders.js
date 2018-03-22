@@ -6,6 +6,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Folder = require('../models/folder');
 
+
 router.get('/folders', (req, res, next) => {
   Folder.find()
     .sort('name')
@@ -16,6 +17,7 @@ router.get('/folders', (req, res, next) => {
       next(err);
     });
 });
+
 
 router.get('/folders/:id', (req, res, next) => {
   const {id} = req.params;
@@ -39,6 +41,7 @@ router.get('/folders/:id', (req, res, next) => {
     });
 });
 
+
 router.post('/folders', (req, res, next) => {
   const {name} = req.body;
   
@@ -59,5 +62,32 @@ router.post('/folders', (req, res, next) => {
     });
 });
 
+
+// router.put('/folders/:id', (req, res, next) => {
+//   const {id} = req.params;
+//   const {name} = req.body;
+
+//   if (!name) {
+//     const err = new Error ('Missing `name`');
+//     err.status = 400;
+//     return next(err);
+//   }
+
+//   if (!mongoose.Types.ObjectId.isValid(id)) {
+//     const err = new Error
+//   }
+// })
+
+router.delete('/folders/:id', (req, res, next) => {
+  const {id} = req.params;
+
+  Folder.findByIdAndRemove(id)
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch(err => {
+      next(err);
+    });
+});
 
 module.exports = router;
