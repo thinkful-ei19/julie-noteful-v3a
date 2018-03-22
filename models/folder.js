@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 
 const folderSchema = new mongoose.Schema({
   name: { type: String, unique: true },
-  folderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Folder' }
 });
 
 folderSchema.set('toObject', {
