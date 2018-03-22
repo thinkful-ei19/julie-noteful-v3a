@@ -63,20 +63,37 @@ router.post('/folders', (req, res, next) => {
 });
 
 
-// router.put('/folders/:id', (req, res, next) => {
-//   const {id} = req.params;
-//   const {name} = req.body;
+router.put('/folders/:id', (req, res, next) => {
+  const {id} = req.params;
+  const {name} = req.body;
 
-//   if (!name) {
-//     const err = new Error ('Missing `name`');
-//     err.status = 400;
-//     return next(err);
-//   }
+  if (!name) {
+    const err = new Error ('Missing `name`');
+    err.status = 400;
+    return next(err);
+  }
 
-//   if (!mongoose.Types.ObjectId.isValid(id)) {
-//     const err = new Error
-//   }
-// })
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error ('The `name` is not valid');
+    err.status=400;
+    return next(err);
+  }
+
+  const updateName = {name};
+  const options = {new: true};
+
+  Folder.findByIdAndUpdate(id, updateName, options)
+    .then(result => {
+      if (result) {
+        res.json(result);
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      next(err);
+    });
+});
 
 router.delete('/folders/:id', (req, res, next) => {
   const {id} = req.params;
