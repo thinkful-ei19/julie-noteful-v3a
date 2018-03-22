@@ -4,9 +4,18 @@ const express = require('express');
 const router = express.Router();
 
 const mongoose = require('mongoose');
-const Note = require('../models/folder');
+const Folder = require('../models/folder');
 
 router.get('/folders', (req, res, next) => {
-  const {searchTerm} = req.query;
-  let filter = {};
+  Folder.find()
+    .sort('created')
+    .then(results => {
+      res.json(results);
+    })
+    .catch(err => {
+      next(err);
+    });
 });
+
+
+module.exports = router;
