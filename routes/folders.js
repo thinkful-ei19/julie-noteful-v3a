@@ -59,6 +59,10 @@ router.post('/folders', (req, res, next) => {
       res.location(`${req.originalUrl}/${result.id}`).status(201).json(result);
     })
     .catch(err => {
+      if (err.code === 11000) {
+        err = new Error('The folder name already exists');
+        err.status = 400;
+      }
       next(err);
     });
 });
@@ -92,6 +96,10 @@ router.put('/folders/:id', (req, res, next) => {
       }
     })
     .catch(err => {
+      if (err.code === 11000) {
+        err = new Error('The folder name already exists');
+        err.status = 400;
+      }
       next(err);
     });
 });
