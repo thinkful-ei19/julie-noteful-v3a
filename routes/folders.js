@@ -5,6 +5,7 @@ const router = express.Router();
 
 const mongoose = require('mongoose');
 const Folder = require('../models/folder');
+const Note = require('../models/note');
 
 
 router.get('/folders', (req, res, next) => {
@@ -97,10 +98,17 @@ router.put('/folders/:id', (req, res, next) => {
 
 router.delete('/folders/:id', (req, res, next) => {
   const {id} = req.params;
-
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error ('The `name` is not valid');
+    err.status=400;
+    return next(err);
+  }
   Folder.findByIdAndRemove(id)
-    .then(() => {
-      res.status(204).end();
+    .then(() => {        
+      Note.deleteMany({folderId:id})
+        .then(()=> {
+          res.status(204).end();
+        });
     })
     .catch(err => {
       next(err);
