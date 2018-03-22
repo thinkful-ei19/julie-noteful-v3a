@@ -8,6 +8,7 @@ const Folder = require('../models/folder');
 
 const seedNotes = require('../db/seed/notes');
 const seedFolders = require('../db/seed/folders');
+console.log(seedFolders);
 
 mongoose.connect(MONGODB_URI)
   .then(() => mongoose.connection.db.dropDatabase())
