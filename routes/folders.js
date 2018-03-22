@@ -8,7 +8,7 @@ const Folder = require('../models/folder');
 
 router.get('/folders', (req, res, next) => {
   Folder.find()
-    .sort('created')
+    .sort('name')
     .then(results => {
       res.json(results);
     })
@@ -38,5 +38,26 @@ router.get('/folders/:id', (req, res, next) => {
       next(err);
     });
 });
+
+router.post('/folders', (req, res, next) => {
+  const {name} = req.body;
+  
+  if (!name) {
+    const err = new Error('Missing `name`');
+    err.status = 400;
+    return next(err);
+  }
+
+  const newFolder = {name};
+
+  Folder.create(newFolder)
+    .then(result => {
+      res.location(`${req.originalUrl}/${result.id}`).status(201).json(result);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
 
 module.exports = router;
