@@ -127,7 +127,7 @@ describe('Noteful API - Folders', function () {
           expect(res.body).to.include.keys('id', 'name');
         });
     });
-    it.only('should respond with a 404 for an invalid id', function() {
+    it('should respond with a 404 for an invalid id', function() {
       const updatedFolder = {
         'name': 'Updating folder example'
       };
@@ -140,6 +140,28 @@ describe('Noteful API - Folders', function () {
     });
   });
 
+  describe('DELETE /api/folders/:id', function() {
+    it('should delete a folder with the given id', function() {
+      let data; 
+      return Folder.findOne().select('id')
+        .then(_data => {
+          data = _data;
+          return chai.request(app).delete(`/api/folders/${data.id}`);
+        })
+        .then((res) => {
+          expect(res).to.have.status(204);
+        });
+    });
+
+    it('should respond with a 404 for an invalid id', function() {
+      return chai.request(app)
+        .delete('/api/folders/9999')
+        .catch(err => err.response)
+        .then(res => {
+          expect(res).to.have.status(400);
+        });
+    });
+  });
 
 
 });
