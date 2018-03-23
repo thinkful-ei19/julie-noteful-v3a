@@ -7,6 +7,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Tag = require('../models/tag');
+const Note = require('../models/note');
 
 router.get('/tags', (req, res, next) => {
   Tag.find()
@@ -107,7 +108,10 @@ router.delete('/tags/:id', (req, res, next) => {
 
   Tag.findByIdAndRemove(id)
     .then(() => {
+      Note.findByIdAndUpdate( id, 
+        { $pull: {tags: {tags:id} } }),
       res.status(204).end();
+    
     })
     .catch(err => {
       next(err);
