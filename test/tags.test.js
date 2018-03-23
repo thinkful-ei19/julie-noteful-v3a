@@ -153,14 +153,6 @@ describe('Noteful API - Tags', function () {
         });
     });
 
-    //     it('should respond with a 404 for an invalid id', function() {
-    //       return chai.request(app)
-    //         .delete('/api/tags/9999999999999999')
-    //         .catch(err => err.response)
-    //         .then(res => {
-    //           expect(res).to.have.status(404);
-    //         });
-    //     });
   });
 
 
