@@ -80,7 +80,7 @@ router.post('/notes', (req, res, next) => {
 /* ========== PUT/UPDATE A SINGLE ITEM ========== */
 router.put('/notes/:id', (req, res, next) => {
   const { id } = req.params;
-  const { title, content } = req.body;
+  const { title, content, folderId } = req.body;
 
   /***** Never trust users - validate input *****/
   if (!title) {
@@ -95,7 +95,7 @@ router.put('/notes/:id', (req, res, next) => {
     return next(err);
   }
 
-  const updateItem = { title, content };
+  const updateItem = { title, content, folderId };
   const options = { new: true };
 
   Note.findByIdAndUpdate(id, updateItem, options)
