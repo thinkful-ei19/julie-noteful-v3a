@@ -107,6 +107,41 @@ describe('Noteful API - Folders', function () {
     
   });
 
+  describe('PUT /api/folder/:id', function() {
+    it('should update the folder with the given id', function() {
+      const updatedFolder = {
+        'name': 'Updating folder example',
+      };
+      let data;
+      return Folder.findOne().select('id')
+        .then(_data => {
+          data = _data;
+          return chai.request(app).put(`/api/folders/${data.id}`)
+            .send(updatedFolder); 
+        })
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json;
+
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.include.keys('id', 'name');
+        });
+    });
+    it.only('should respond with a 404 for an invalid id', function() {
+      const updatedFolder = {
+        'name': 'Updating folder example'
+      };
+      return chai.request(app).put('/api/folders/blahblahblah')
+        .send(updatedFolder)
+        .catch(err => err.response)
+        .then(res => {
+          expect(res).to.have.status(404);
+        });
+    });
+  });
+
+
+
 });
 
 
