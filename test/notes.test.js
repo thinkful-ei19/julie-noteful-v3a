@@ -30,24 +30,24 @@
 //     return mongoose.disconnect();
 //   });
 
-  describe('GET /api/notes', function () {
+// describe('GET /api/notes', function () {
 
-    it('should return the correct number of Notes and correct fields', function () {
-      const dbPromise = Note.find(); //getting data from database
-      const apiPromise = chai.request(app).get('/api/notes'); //getting from api
+//   it('should return the correct number of Notes and correct fields', function () {
+//     const dbPromise = Note.find(); //getting data from database
+//     const apiPromise = chai.request(app).get('/api/notes'); //getting from api
 
-      return Promise.all([dbPromise, apiPromise])
-        .then(([data, res]) => {
-          expect(res).to.have.status(200);
-          expect(res).to.be.json;
-          expect(res.body).to.be.a('array');
-          expect(res.body).to.have.length(data.length);
-          res.body.forEach(function (item) {
-            expect(item).to.be.a('object');
-            expect(item).to.have.keys('id', 'title', 'content', 'created');
-          });
-        });
-    });
+//     return Promise.all([dbPromise, apiPromise])
+//       .then(([data, res]) => {
+//         expect(res).to.have.status(200);
+//         expect(res).to.be.json;
+//         expect(res.body).to.be.a('array');
+//         expect(res.body).to.have.length(data.length);
+//         res.body.forEach(function (item) {
+//           expect(item).to.be.a('object');
+//           expect(item).to.have.keys('id', 'title', 'content', 'created');
+//         });
+//       });
+//   });
 
 //     it('should return correct search results for a searchTerm query', function () {
 //       const searchTerm = 'gaga';
@@ -83,27 +83,27 @@
 
 //   });
 
-//   describe('GET /api/notes/:id', function () {
+// describe('GET /api/notes/:id', function () {
 
-//     it('should return correct note for a given id', function () {
-//       let data;
-//       return Note.findOne()
-//         .then(_data => {
-//           data = _data;
-//           return chai.request(app).get(`/api/notes/${data.id}`);
-//         })
-//         .then((res) => {
-//           expect(res).to.have.status(200);
-//           expect(res).to.be.json;
+//   it('should return correct note for a given id', function () {
+//     let data;
+//     return Note.findOne()
+//       .then(_data => {
+//         data = _data;
+//         return chai.request(app).get(`/api/notes/${data.id}`);
+//       })
+//       .then((res) => {
+//         expect(res).to.have.status(200);
+//         expect(res).to.be.json;
 
-//           expect(res.body).to.be.an('object');
-//           expect(res.body).to.have.keys('id', 'title', 'content', 'created');
+//         expect(res.body).to.be.an('object');
+//         expect(res.body).to.have.keys('id', 'title', 'content', 'created');
 
-//           expect(res.body.id).to.equal(data.id);
-//           expect(res.body.title).to.equal(data.title);
-//           expect(res.body.content).to.equal(data.content);
-//         });
-//     });
+//         expect(res.body.id).to.equal(data.id);
+//         expect(res.body.title).to.equal(data.title);
+//         expect(res.body.content).to.equal(data.content);
+//       });
+//   });
 
 //     it('should respond with a 400 for an invalid id', function () {
 //       const badId = '99-99-99';
